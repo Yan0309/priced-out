@@ -26,6 +26,7 @@ opened directly from the filesystem.
 - Median household income by tenure: table `B25119`
 - Housing tenure: table `B25003`
 - Population: table `B01003`
+- County boundaries: U.S. Census Bureau 2024 cartographic boundary file
 
 Cost-burdened renter households spend 30% or more of household income on gross
 rent. Severely burdened households spend 50% or more. Households with a

@@ -154,7 +154,7 @@ const counties = [];
 for (const [gid, record] of Object.entries(countiesRaw.data)) {
   const fips = gid.slice(-5);
   const stateFips = fips.slice(0, 2);
-  if (!stateNames.has(stateFips)) continue;
+  if (!stateNames.has(stateFips) || Number(stateFips) > 56) continue;
   const fields = stateFields(record);
   if (!fields) continue;
   const fullName = countiesRaw.geography[gid].name;

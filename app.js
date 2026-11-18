@@ -70,7 +70,7 @@ const narrative = {
     caption:
       "County-level OLS model. Coefficients describe adjusted associations, not causal effects.",
     aria:
-      "A coefficient chart shows higher median rent is associated with more rent burden and higher renter income with less, with an R squared of 0.65.",
+      "A coefficient chart shows higher median rent is associated with more rent burden and higher renter income with less, with an R squared of 0.66.",
   },
 };
 
@@ -1289,15 +1289,17 @@ async function init() {
   try {
     const [data, countyTopology, stateTopology] = await Promise.all([
       d3.json("data/site-data.json"),
-      d3.json("data/counties-10m.json"),
+      d3.json("data/counties-2024.topo.json"),
       d3.json("data/states-10m.json"),
     ]);
 
     siteData = data;
-    countyFeatures = topojson.feature(
-      countyTopology,
-      countyTopology.objects.counties
-    ).features;
+    countyFeatures = topojson
+      .feature(countyTopology, countyTopology.objects.counties)
+      .features.map((feature) => ({
+        ...feature,
+        id: feature.properties?.GEOID ?? feature.id,
+      }));
     stateFeatures = topojson.feature(
       stateTopology,
       stateTopology.objects.states
