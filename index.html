@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A data scrollytelling story about rent burdens across the United States using American Community Survey data."
+    />
+    <meta name="author" content="Haoyan Zhong" />
+    <meta name="theme-color" content="#111817" />
+    <title>Priced Out | A Data Scrollytelling Story</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#story">Skip to the story</a>
+    <div class="reading-progress" aria-hidden="true">
+      <span id="reading-progress-bar"></span>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Priced Out, back to top">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>PRICED / OUT</span>
+      </a>
+      <div class="header-actions">
+        <span class="release-tag">ACS 2020–24</span>
+        <button class="icon-button" id="sources-button" type="button">
+          <i data-lucide="book-open" aria-hidden="true"></i>
+          <span class="button-label">Sources</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            A data story about 45 million U.S. renter households
+          </p>
+          <h1 id="hero-title">
+            <span>Half of renters</span>
+            <span class="accent-line">cross the 30% line.</span>
+          </h1>
+          <p class="hero-deck">
+            More than 21 million renter households spend at least 30% of their
+            income on rent. But the burden is not spread evenly, and income
+            alone does not explain where it lands hardest.
+          </p>
+          <p class="byline">
+            By <strong>Haoyan Zhong</strong> · Duke University · 2026
+          </p>
+          <div class="hero-links">
+            <a class="primary-link" href="#story">
+              Follow the data
+              <i data-lucide="arrow-down" aria-hidden="true"></i>
+            </a>
+            <span class="hero-note">Scroll to explore</span>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="51 of every 100 renter households are cost-burdened">
+          <div class="hero-visual-topline">
+            <span>Every square = 1 renter household</span>
+            <span class="hero-source">ACS 2020–2024</span>
+          </div>
+          <div class="house-grid" id="hero-house-grid" aria-hidden="true"></div>
+          <div class="hero-visual-caption">
+            <strong id="hero-burden-number">51</strong>
+            <span>of every 100 renter households spend 30% or more of income on rent</span>
+          </div>
+          <div class="hero-legend" aria-hidden="true">
+            <span><i class="legend-swatch legend-under"></i>Under 30%</span>
+            <span><i class="legend-swatch legend-over"></i>30% or more</span>
+            <span><i class="legend-swatch legend-severe"></i>50% or more</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="fact-strip" aria-label="Key national statistics">
+        <div class="fact">
+          <span class="fact-value" id="fact-burdened">21.4M</span>
+          <span class="fact-label">renter households above the 30% line</span>
+        </div>
+        <div class="fact">
+          <span class="fact-value" id="fact-rent">$1,413</span>
+          <span class="fact-label">median monthly gross rent</span>
+        </div>
+        <div class="fact">
+          <span class="fact-value" id="fact-income">$52,966</span>
+          <span class="fact-label">median renter household income</span>
+        </div>
+      </section>
+
+      <section class="story-intro" id="story">
+        <p class="section-kicker">The national picture</p>
+        <div class="intro-grid">
+          <h2>
+            The 30% rule is a warning light, not a finish line.
+          </h2>
+          <div class="intro-copy">
+            <p>
+              Housing researchers commonly describe households that spend more
+              than 30% of income on rent as <strong>cost-burdened</strong>.
+              Above 50%, the burden is considered <strong>severe</strong>.
+            </p>
+            <p>
+              The rule is not a physical threshold. It is a useful benchmark
+              that leaves less room for food, health care, transportation, and
+              savings. In the latest five-year ACS estimates, roughly half of
+              all U.S. renter households sit above it.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scrolly" aria-label="Scrolling data story">
+        <div class="viz-column">
+          <div class="viz-shell">
+            <div class="viz-heading">
+              <span id="viz-kicker">01 / The threshold</span>
+              <span id="viz-status" class="viz-status">National estimate</span>
+            </div>
+            <div
+              id="chart"
+              class="chart"
+              role="img"
+              aria-label="Interactive chart showing the share of renter households who are cost-burdened."
+            ></div>
+            <div class="chart-tooltip" id="chart-tooltip" role="status"></div>
+            <p id="chart-caption" class="chart-caption"></p>
+          </div>
+        </div>
+
+        <div class="step-column">
+          <article class="step" data-step="burden" data-kicker="01 / The threshold">
+            <p class="step-number">01</p>
+            <h3>A simple benchmark exposes a large problem.</h3>
+            <p>
+              A household is cost-burdened when gross rent takes 30% or more
+              of income. In the U.S., 51.1% of renter households cross that
+              line after excluding units where the ratio could not be computed.
+            </p>
+            <p class="step-aside">
+              Gross rent includes utilities paid by the renter.
+            </p>
+          </article>
+
+          <article class="step" data-step="income" data-kicker="02 / The median renter">
+            <p class="step-number">02</p>
+            <h3>At the median, rent already consumes nearly one-third of income.</h3>
+            <p>
+              Median gross rent is $1,413 per month. Median renter household
+              income is $52,966 per year, or about $4,414 per month. Rent alone
+              equals 32% of that income before other necessities enter the
+              budget.
+            </p>
+            <p class="step-aside">
+              A median describes the middle household, not the typical budget
+              of every renter.
+            </p>
+          </article>
+
+          <article class="step" data-step="map" data-kicker="03 / Geography">
+            <p class="step-number">03</p>
+            <h3>The burden is geographic, not random.</h3>
+            <p>
+              County estimates reveal clusters of high rent burden in Florida,
+              coastal metros, mountain resort communities, and university
+              centers. Large stretches of the Midwest and Appalachia sit lower.
+            </p>
+            <p class="step-aside">
+              County estimates combine five years of survey responses.
+            </p>
+          </article>
+
+          <article class="step" data-step="florida" data-kicker="04 / Close-up">
+            <p class="step-number">04</p>
+            <h3>Florida turns the map red.</h3>
+            <p>
+              Seven of the ten highest-burden large counties are in Florida.
+              Osceola County leads the group: 65.4% of renter households are
+              cost-burdened, and 35.2% are severely burdened.
+            </p>
+            <p class="step-aside">
+              Large counties here means at least 10,000 renter households.
+            </p>
+          </article>
+
+          <article class="step" data-step="states" data-kicker="05 / State by state">
+            <p class="step-number">05</p>
+            <h3>The national average hides a wide spread.</h3>
+            <p>
+              State estimates range from about 39% to just over 60%. The
+              national rate is useful for a headline, but it smooths over
+              housing markets with very different rules, prices, and incomes.
+            </p>
+            <p class="step-aside">
+              Each dot is a state or the District of Columbia.
+            </p>
+          </article>
+
+          <article class="step" data-step="scatter" data-kicker="06 / Income">
+            <p class="step-number">06</p>
+            <h3>Higher county income does not reliably mean lower rent burden.</h3>
+            <p>
+              Across 2,430 counties with at least 1,000 renter households, the
+              fitted line is almost flat. Median renter income explains less
+              than 1% of the variation in county rent-burden rates.
+            </p>
+            <p class="step-aside">
+              This is an ecological comparison: counties are the observations,
+              not individual households.
+            </p>
+          </article>
+
+          <article class="step" data-step="pair" data-kicker="07 / Same income">
+            <p class="step-number">07</p>
+            <h3>Two counties, similar incomes, different rent math.</h3>
+            <p>
+              Osceola County, Florida and Ward County, North Dakota have almost
+              the same median renter income: about $53,400. Yet their
+              cost-burdened shares differ by 27 percentage points. Their median
+              rents differ by nearly $700 per month.
+            </p>
+            <p class="step-aside">
+              A comparison can reveal a pattern without proving what caused it.
+            </p>
+          </article>
+
+          <article class="step" data-step="model" data-kicker="08 / Two variables">
+            <p class="step-number">08</p>
+            <h3>Rent and income together tell a stronger statistical story.</h3>
+            <p>
+              In a county-level model with both variables, each additional
+              $10,000 in median renter income is associated with an 8.3-point
+              lower burden rate, holding median rent constant. Each $100 in
+              rent is associated with a 3.6-point higher rate, holding income
+              constant. Together they explain about 65% of the variation.
+            </p>
+            <p class="step-aside">
+              These are adjusted associations, not causal effects.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="takeaway" aria-labelledby="takeaway-title">
+        <p class="section-kicker">What the data can say</p>
+        <h2 id="takeaway-title">
+          Rent burden is a ratio, and every ratio has two sides.
+        </h2>
+        <div class="takeaway-grid">
+          <div>
+            <span class="takeaway-index">01</span>
+            <h3>Income matters.</h3>
+            <p>
+              Higher-income places tend to have lower burden rates when rent
+              is held constant. But income alone leaves most county variation
+              unexplained.
+            </p>
+          </div>
+          <div>
+            <span class="takeaway-index">02</span>
+            <h3>Housing costs matter too.</h3>
+            <p>
+              The combined income-and-rent model fits much better. That does
+              not mean either variable has a simple causal effect.
+            </p>
+          </div>
+          <div>
+            <span class="takeaway-index">03</span>
+            <h3>The unit of analysis matters.</h3>
+            <p>
+              County-level patterns cannot be applied directly to individual
+              households. Aggregation can hide unequal burdens within a place.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="method" id="methods" aria-labelledby="method-title">
+        <div class="method-heading">
+          <p class="section-kicker">Methods & sources</p>
+          <h2 id="method-title">Reproducible by design.</h2>
+          <p>
+            Estimates come from the U.S. Census Bureau’s American Community
+            Survey 2020–2024 five-year release, accessed through the Census
+            Reporter API. The five-year estimates describe conditions over
+            2020–2024, not a single calendar year.
+          </p>
+        </div>
+        <div class="method-details">
+          <details open>
+            <summary>Definitions</summary>
+            <p>
+              Cost-burdened renter households have gross rent equal to 30% or
+              more of household income in the past 12 months. Severely
+              burdened households have gross rent equal to 50% or more.
+              Households with “not computed” rent-to-income ratios are excluded
+              from the denominator.
+            </p>
+          </details>
+          <details>
+            <summary>Statistical notes</summary>
+            <p>
+              Charts show point estimates from sample survey data. Margins of
+              error are retained in the downloadable CSV files. The county
+              regressions use ordinary least squares and include counties with
+              at least 1,000 renter households and complete estimates. The
+              two-variable model uses median renter household income and median
+              gross rent as predictors.
+            </p>
+          </details>
+          <details>
+            <summary>Limitations</summary>
+            <p>
+              County summaries are not household-level observations.
+              Cost-burden rates also depend on household composition, housing
+              supply, local policy, migration, and measurement choices. The
+              models describe associations and should not be interpreted as
+              causal estimates.
+            </p>
+          </details>
+          <div class="method-actions">
+            <a class="source-link" href="data/rent_burden_counties.csv" download>
+              <i data-lucide="download" aria-hidden="true"></i>
+              County data
+            </a>
+            <a class="source-link" href="data/rent_burden_states.csv" download>
+              <i data-lucide="download" aria-hidden="true"></i>
+              State data
+            </a>
+            <a
+              class="source-link"
+              href="https://censusreporter.org/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <i data-lucide="external-link" aria-hidden="true"></i>
+              Census Reporter
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <span class="footer-mark" aria-hidden="true"></span>
+        <p>PRICED / OUT</p>
+      </div>
+      <p>
+        By Haoyan Zhong, Duke University · Statistics coursework · 2026 ·
+        Data: U.S. Census Bureau ACS 2020–2024
+      </p>
+      <a href="#top">
+        Back to top
+        <i data-lucide="arrow-up" aria-hidden="true"></i>
+      </a>
+    </footer>
+
+    <dialog class="sources-dialog" id="sources-dialog" aria-labelledby="sources-title">
+      <div class="dialog-heading">
+        <div>
+          <p class="section-kicker">Source note</p>
+          <h2 id="sources-title">How this story was built</h2>
+        </div>
+        <button class="icon-button dialog-close" id="dialog-close" type="button">
+          <i data-lucide="x" aria-hidden="true"></i>
+          <span class="sr-only">Close sources</span>
+        </button>
+      </div>
+      <p>
+        The analysis uses the U.S. Census Bureau’s American Community Survey
+        2020–2024 five-year estimates. Rent burden comes from table B25070;
+        rent and income come from B25064 and B25119. Data were retrieved through
+        Census Reporter.
+      </p>
+      <div class="dialog-links">
+        <a
+          href="https://data.census.gov/table/ACSDT5Y2024.B25070"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Census table B25070
+          <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+        </a>
+        <a href="#methods">
+          Read methods
+          <i data-lucide="arrow-down" aria-hidden="true"></i>
+        </a>
+      </div>
+    </dialog>
+
+    <noscript>
+      <div class="noscript">
+        This story uses JavaScript to render its data visualizations. The
+        downloadable CSV files in the methods section contain the underlying
+        data.
+      </div>
+    </noscript>
+
+    <script src="vendor/d3.min.js"></script>
+    <script src="vendor/topojson-client.min.js"></script>
+    <script src="vendor/lucide.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
